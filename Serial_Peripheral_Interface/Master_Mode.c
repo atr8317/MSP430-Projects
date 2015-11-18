@@ -35,15 +35,16 @@ volatile unsigned int i = 0;			// for loop counter
 interrupt void WDT_interval_handler(){
 
 	//Chooses the number
-	if(start==0){ // only read button at start of game
+	if(start==0){ 			// only read button at start of game
 		b = (P1IN & BUTTON); 	// read button bit
 		if(b==0)		//button is pressed and game not started 
 					//--- choosing secret number
 			secret_number++;//increment secret number as long as button is held down
 
 			//secret_number = 25000;//hardwired value for debugging purposes
-
-		else if(last_button==0 && b!=0)
+						//to check what is transmitted to B in a 2-transmission cycle
+						
+		else if(last_button==0 && b!=0)	//when button is released- set start flag
 			start = 1;
 		last_button = b;
 	}
