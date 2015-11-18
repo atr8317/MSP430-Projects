@@ -43,7 +43,9 @@ interrupt void WDT_interval_handler(){
 
 			//secret_number = 25000;//hardwired value for debugging purposes
 						//to check what is transmitted to B in a 2-transmission cycle
-						
+						//i.e. send high order bits, then low order bits
+						//***current transmissions of the full 16 bits are missing bits after 
+							// receiving and shifting***
 		else if(last_button==0 && b!=0)	//when button is released- set start flag
 			start = 1;
 		last_button = b;
@@ -56,6 +58,8 @@ interrupt void WDT_interval_handler(){
 		//for(i = 10; i > 0; i--){	// to delay between transmissions
 		//}
 		UCB0TXBUF = start; 		//dummy tx to receive low order bits of guess from B
+						// ***second transmission being received correctly by B***
+						// ***maybe because only LSB is high and no shifting is required***
 	}
 }
 ISR_VECTOR(WDT_interval_handler, ".int10")
@@ -87,6 +91,10 @@ void interrupt spi_rx_handler(){
 		//}
 		temp = UCB0RXBUF;
 		guess_rec = guess_rec + temp;	// add lower bits into variable
+				// *** rx from B is currently receiving more high bits than it should***
+				// *** first guess should be 1000 0000 0000 0000
+				// *** for different codding attempts, the closest rx has been:  1000 0000 1000 0000
+				// *** "seems" to be sending high order bits twice
 	}
 	IFG2 &= ~UCB0RXIFG;		 // clear UCB0 RX flag
 }
