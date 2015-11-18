@@ -63,7 +63,17 @@ void interrupt spi_rx_handler(){
 		start = UCB0RXBUF;		//receive start flag from A
 		//for(i = 10; i > 0; i--){	//to delay between receiving bit streams
 		//}
+		
+		//secret_number = UCB0RXBUF;
+		//secret_number = secret_number<<8;
 		//secret_number = secret_number + UCB0RXBUF;  // was used in debugging
+			//to verify 2 1-byte transmissions 25000 was hardwired to secret_number on A
+			// and transmitted here to B
+			// again, expected rx was: 0110 0001 1010 1000
+			// what saved to variable: 0110 0001 0110 0001
+			// further showing that the high order bits are being sent twice
+			// *** suggests timing issues ***
+		
 	}
 	IFG2 &= ~UCB0RXIFG;		 // clear UCB0 RX flag
 }
