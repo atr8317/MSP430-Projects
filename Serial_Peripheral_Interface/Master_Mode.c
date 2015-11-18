@@ -44,8 +44,10 @@ interrupt void WDT_interval_handler(){
 			//secret_number = 25000;//hardwired value for debugging purposes
 						//to check what is transmitted to B in a 2-transmission cycle
 						//i.e. send high order bits, then low order bits
-						//***current transmissions of the full 16 bits are missing bits after 
-							// receiving and shifting***
+						//expected rx variable on B: 0110 0001 1010 1000
+						//what saved to variable is: 0110 0001 0110 0001
+						//confirming high order bits were sent twice
+							// ***suggests timing issue***
 		else if(last_button==0 && b!=0)	//when button is released- set start flag
 			start = 1;
 		last_button = b;
@@ -95,6 +97,7 @@ void interrupt spi_rx_handler(){
 				// *** first guess should be 1000 0000 0000 0000
 				// *** for different codding attempts, the closest rx has been:  1000 0000 1000 0000
 				// *** "seems" to be sending high order bits twice
+					//confirmed through sending test variable to B
 	}
 	IFG2 &= ~UCB0RXIFG;		 // clear UCB0 RX flag
 }
