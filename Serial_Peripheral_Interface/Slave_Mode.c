@@ -35,6 +35,10 @@ interrupt void WDT_interval_handler(){
 			//for(i = 10; i > 0; i--){	//to delay between transmissions
 			//}
 			UCB0TXBUF = guess;		//transmit low order bits to master
+				//***rx variable expected at A: 1000 0000 0000 0000
+				//***rx variable actually at A: 1000 0000 1000 0000
+				//systematic confirmation of timing issue existing between transmission
+					// on both devices
 		}
 	}
 }
