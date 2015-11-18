@@ -3,19 +3,6 @@
  * CONTROLLER B
  *
  *
- *
- SPI_bounce_master
- At regular WDT intervals, this sends data out the UCB SPI interface.
- The data received is logged by the RX interrupt handler.
- This example can be used to loop back (ie, connecting MOSI to MISO)
- A global counter keeps track of the numbers of TX and RX operations.
-
- Timing and clock.
- MCLK and SMCLK = 8 Mhz
- UCB0BRx interface divisor is a parameterized below.
- WDT divides SMCL by 512 (==> fastest rate gives 1 TX every 64 microseconds)
- Parameter ACTION_INTERVAL controls actual frequency of WDT interrupts that TX
- 16 bit Parameter BIT_RATE_DIVISOR controls the SPI bitrate clock
 */
 
 #include "msp430g2553.h"
