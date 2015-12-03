@@ -1,0 +1,37 @@
+A is Master
+B is Slave
+
+A chooses number
+  - when number chosen, start == 1
+A sends start to B; B sends guess to A
+A sends comparison to B; B sends next guess to A
+  - continue until number is guessed
+    - comparison value will determine whether game_over flag is asserted
+      - comparison == 0 -> no comparison sent
+      - comparison == 1 -> guess < number
+      - comparison == 2 -> guess > number
+      - comparison == 4 -> guess == number
+          - game_over == 1
+
+When game_over == 1
+  - reset start, compare, and game_over to 0
+
+
+Set-Up
+  Transmission Set 1
+    - A (Master)
+      - tx start
+      - rx guess
+    - B (Slave)
+      - tx guess
+      - rx start
+      
+  Transmission Set 2 - to be repeated until game is over
+    - A (Master)
+      - tx compare
+      - rx guess
+    - B (Slave)
+      - tx guess
+      - rx compare
+      
+Master only ever needs to send one byte per transmission set, so the value is sent twice to allow the Slave to sent 2 bytes
